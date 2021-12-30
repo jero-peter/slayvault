@@ -5232,6 +5232,112 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/AppListing.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/AppListing.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['user', 'apps'],
+  data: function data() {
+    return {
+      userData: JSON.parse(this.user),
+      subscriptions: [],
+      applications: [],
+      allApplications: JSON.parse(this.apps),
+      appIdArray: ''
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    this.appIdArray = this.userData.subscription_list;
+    this.subscriptions = this.allApplications.filter(function (app) {
+      if (_this.appIdArray.includes(app.id)) {
+        return app;
+      }
+    });
+    this.applications = this.allApplications.filter(function (app) {
+      if (!_this.appIdArray.includes(app.id)) {
+        return app;
+      }
+    });
+  },
+  methods: {
+    addAppToSubscription: function addAppToSubscription(addedApplication) {
+      var _this2 = this;
+
+      this.appIdArray = [].concat(_toConsumableArray(this.appIdArray), [addedApplication.id]);
+      this.applications = this.applications.filter(function (application) {
+        application.id != addedApplication.id;
+      });
+      this.subscriptions = [].concat(_toConsumableArray(this.subscriptions), [addedApplication]);
+      axios.post('/add-subscription', this.subscriptions).then(function (returnWrapper) {
+        _this2.userData = returnWrapper.data.user;
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Authentication.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Authentication.vue?vue&type=script&lang=js& ***!
@@ -28010,15 +28116,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _AppListing_vue_vue_type_template_id_5e77c44e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AppListing.vue?vue&type=template&id=5e77c44e& */ "./resources/js/components/AppListing.vue?vue&type=template&id=5e77c44e&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _AppListing_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AppListing.vue?vue&type=script&lang=js& */ "./resources/js/components/AppListing.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-var script = {}
+
+
 
 
 /* normalize component */
 ;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  script,
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _AppListing_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _AppListing_vue_vue_type_template_id_5e77c44e___WEBPACK_IMPORTED_MODULE_0__.render,
   _AppListing_vue_vue_type_template_id_5e77c44e___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
@@ -28111,6 +28219,22 @@ component.options.__file = "resources/js/components/Home.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/AppListing.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/AppListing.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AppListing_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./AppListing.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/AppListing.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AppListing_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/Authentication.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************!*\
   !*** ./resources/js/components/Authentication.vue?vue&type=script&lang=js& ***!
@@ -28194,72 +28318,154 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "col-12 row-fluid" }, [
+    _c("div", { staticClass: "container row mx-auto" }, [
+      _c("div", { staticClass: "col-6 mx-auto border" }, [
+        _c("h4", { staticClass: "text-white my-3 text-center" }, [
+          _vm._v("App Manager"),
+        ]),
+        _vm._v(" "),
+        _c(
+          "ul",
+          { staticClass: "list-unstyled text-white" },
+          [
+            _vm._l(_vm.subscriptions, function (subscription) {
+              return _c(
+                "li",
+                { key: subscription.id, staticClass: "text-white" },
+                [
+                  _vm._v(_vm._s(subscription.name) + " : "),
+                  _c("span", { staticClass: "float-end text-success" }, [
+                    _vm._v("Active"),
+                  ]),
+                ]
+              )
+            }),
+            _vm._v(" "),
+            _vm._l(_vm.applications, function (application) {
+              return _c(
+                "li",
+                { key: application.id, staticClass: "text-white" },
+                [
+                  _vm._v(_vm._s(application.name) + " : "),
+                  _c("span", { staticClass: "float-end text-danger" }, [
+                    _vm._v("Inactive"),
+                  ]),
+                ]
+              )
+            }),
+          ],
+          2
+        ),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-6 mx-auto border" }, [
+        _c("h4", { staticClass: "text-white my-3 text-center" }, [
+          _vm._v("Subscription Manager"),
+        ]),
+        _vm._v(" "),
+        _c(
+          "ul",
+          { staticClass: "list-unstyled text-white" },
+          [
+            _vm._l(_vm.subscriptions, function (subscription) {
+              return _c(
+                "li",
+                { key: subscription.id, staticClass: "text-white" },
+                [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-check-label",
+                        attrs: { for: subscription.name + "SubSwitch" },
+                      },
+                      [_vm._v(_vm._s(subscription.name))]
+                    ),
+                  ]),
+                ]
+              )
+            }),
+            _vm._v(" "),
+            _vm._l(_vm.applications, function (application) {
+              return _c(
+                "li",
+                { key: application.id, staticClass: "text-white" },
+                [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-label",
+                        attrs: { for: application.name + "AppSwitch" },
+                      },
+                      [_vm._v(_vm._s(application.name))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success float-end",
+                        attrs: {
+                          type: "button",
+                          id: application.name + "AppSwitch",
+                        },
+                        on: {
+                          click: function ($event) {
+                            $event.preventDefault()
+                            return _vm.addAppToSubscription(application)
+                          },
+                        },
+                      },
+                      [_vm._v("Subscribe")]
+                    ),
+                  ]),
+                ]
+              )
+            }),
+          ],
+          2
+        ),
+      ]),
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "col-6 text-center row mx-auto" },
+      [
+        _c("h4", { staticClass: "text-white my-3" }, [_vm._v("Apps")]),
+        _vm._v(" "),
+        _vm._l(_vm.subscriptions, function (subscription) {
+          return _c(
+            "a",
+            {
+              key: subscription.id,
+              staticClass: "text-decoration-none bg-dark card col-4 border-0",
+              attrs: {
+                href:
+                  "http://" +
+                  subscription.subdomain +
+                  ".saaslay.test/slayvault/login",
+              },
+            },
+            [
+              _c("img", {
+                staticClass: "card-body img-fluid",
+                attrs: { src: "/img/" + subscription.subdomain + ".png" },
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-footer text-white" }, [
+                _c("p", [_vm._v(_vm._s(subscription.name))]),
+              ]),
+            ]
+          )
+        }),
+      ],
+      2
+    ),
+  ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-6 text-center row mx-auto" }, [
-      _c("h4", { staticClass: "text-white my-3" }, [_vm._v("Apps")]),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "text-decoration-none bg-dark card col-4 border-0",
-          attrs: { href: "http://service1.saaslay.test/slayvault/login" },
-        },
-        [
-          _c("img", {
-            staticClass: "card-body img-fluid",
-            attrs: { src: "/img/service1.png" },
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-footer text-white" }, [
-            _c("p", [_vm._v("Adventure App")]),
-          ]),
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "text-decoration-none bg-dark card col-4 border-0",
-          attrs: { href: "http://service2.saaslay.test/slayvault/login" },
-        },
-        [
-          _c("img", {
-            staticClass: "card-body img-fluid",
-            attrs: { src: "/img/service2.png" },
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-footer text-white" }, [
-            _c("p", [_vm._v("Friends App")]),
-          ]),
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "text-decoration-none bg-dark card col-4 border-0",
-          attrs: { href: "#" },
-        },
-        [
-          _c("img", {
-            staticClass: "card-body img-fluid",
-            attrs: { src: "/img/service3.png" },
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-footer text-white" }, [
-            _c("p", [_vm._v("Service3 App")]),
-          ]),
-        ]
-      ),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

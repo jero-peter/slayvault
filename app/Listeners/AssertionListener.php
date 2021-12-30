@@ -9,8 +9,14 @@ use CodeGreenCreative\SamlIdp\Events\Assertion;
 class AssertionListener
 {
     public function handle(Assertion $event)
-    {
+    {   
+        $subList = array();
+        foreach(auth()->user()->subscription_list as $subId){
+            array_push($subList, json_encode(config('applist.apps')[$subId]));
+        }
+
         $event->attribute_statement
+            ->addAttribute(new Attribute('Subscription', $subList))
             ->addAttribute(new Attribute(ClaimTypes::PPID, auth()->user()->id))
             ->addAttribute(new Attribute(ClaimTypes::NAME, auth()->user()->name))
             ->addAttribute(new Attribute(ClaimTypes::ROLE , auth()->user()->user_type))

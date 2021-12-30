@@ -27,3 +27,10 @@ Route::get('/home', [App\Http\Controllers\AdminController::class, 'index'])->nam
 
 Route::post('/request-password-change', [App\Http\Controllers\AdminController::class, 'changePassword']);
 Route::post('/request-logout-everywhere', [App\Http\Controllers\AdminController::class, 'logoutEverywhere']);
+
+
+/*
+ Application Subscription And Management
+*/
+
+Route::post('/add-subscription', [App\Http\Controllers\AdminController::class, 'addSubscription']);

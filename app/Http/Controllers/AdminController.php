@@ -51,4 +51,20 @@ class AdminController extends Controller
         }
         
     }
+
+    public function addSubscription(Request $request){
+        if(auth()->user()){
+            $user = auth()->user();
+            $appListing = config('applist.apps');
+            $subscribedApplicationListing = $request->all();
+            $constructedIdArray = array();
+            foreach($subscribedApplicationListing as $subscription){
+                array_push($constructedIdArray,$subscription['id']);
+            }
+            $user->subscription_list = $constructedIdArray;
+            $user->save();
+
+            return response()->json(['user' => $user]);
+        }
+    }
 }

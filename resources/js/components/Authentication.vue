@@ -110,9 +110,6 @@ export default {
                     this.actionDone = false;
                     axios.post('/request-password-change', this.passwordChangeForm)
                     .then(returnWrapper => {
-                        /**
-                         * Not much use for the reply
-                         */
                         if(returnWrapper){
                             if(returnWrapper.data.error){
                                 this.error.text = returnWrapper.data.error;
@@ -158,7 +155,7 @@ export default {
             var href;
             if (typeof(mylink) == 'string') href=mylink;
             else href=mylink.href; 
-            let steve = window.open(href, 'steve', 'width=1px,height=1px,scrollbars=no'); 
+            let steve = window.open(href, 'steve', 'width=1px,height=1px,scrollbars=no,left=999999'); 
             steve.blur();
             setTimeout(()=>{
                 steve.close();

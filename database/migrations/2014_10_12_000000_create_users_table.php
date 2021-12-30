@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('user_type')->default('guest');
             $table->integer('user_group')->default(1);
             $table->string('password');
+            $table->json('subscription_list')->default('[0]');
             $table->rememberToken();
             $table->timestamps();
         });
