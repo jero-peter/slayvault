@@ -5292,8 +5292,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['user', 'apps'],
   data: function data() {
@@ -5421,11 +5419,79 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var errorInterval;
+var requestEncrypt;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['user'],
+  props: ['user', 'secondary_users'],
   data: function data() {
     return {
+      admins: JSON.parse(this.secondary_users),
       error: {
         text: ''
       },
@@ -5439,15 +5505,26 @@ var errorInterval;
         currentPass: ''
       },
       confirmPass: '',
+      userPassError: false,
       passError: false,
       withoutError: false,
       showLogoutForm: false,
+      showNewUserForm: false,
       logoutStatus: {
         status: false,
         type: '',
         message: ''
+      },
+      newUserForm: {
+        name: '',
+        email: '',
+        password: '',
+        currentPass: ''
       }
     };
+  },
+  created: function created() {
+    requestEncrypt = btoa(this.activeUser.company);
   },
   methods: {
     requestPasswordChange: function requestPasswordChange() {
@@ -5460,9 +5537,6 @@ var errorInterval;
           this.passError = false;
           this.actionDone = false;
           axios.post('/request-password-change', this.passwordChangeForm).then(function (returnWrapper) {
-            /**
-             * Not much use for the reply
-             */
             if (returnWrapper) {
               if (returnWrapper.data.error) {
                 _this.error.text = returnWrapper.data.error;
@@ -5508,7 +5582,7 @@ var errorInterval;
       if (!window.focus) return true;
       var href;
       if (typeof mylink == 'string') href = mylink;else href = mylink.href;
-      var steve = window.open(href, 'steve', 'width=1px,height=1px,scrollbars=no');
+      var steve = window.open(href, 'steve', 'width=1px,height=1px,scrollbars=no,left=999999');
       steve.blur();
       setTimeout(function () {
         steve.close();
@@ -5556,6 +5630,49 @@ var errorInterval;
               _this3.showLogoutForm = false;
             }, 1000);
           }
+        }
+      });
+    },
+    addNewAdministrator: function addNewAdministrator() {
+      var _this4 = this;
+
+      this.actionDone = false;
+      axios.post('/add-secondary-user', this.newUserForm).then(function (returnWrapper) {
+        if (returnWrapper) {
+          if (returnWrapper.data.error) {
+            _this4.error.text = returnWrapper.data.error;
+            _this4.userPassError = true;
+            errorInterval = setTimeout(function () {
+              _this4.userPassError = false;
+              _this4.actionDone = true;
+            }, 1000);
+          } else if (returnWrapper.data.success) {
+            _this4.withoutError = true;
+            _this4.admins = returnWrapper.data.updatedUserList;
+            setTimeout(function () {
+              _this4.actionDone = true;
+              _this4.withoutError = false;
+              _this4.newUserForm = {
+                name: '',
+                email: '',
+                password: '',
+                currentPass: ''
+              };
+            }, 1000);
+          }
+        }
+      });
+    },
+    removeSelectedAdministrator: function removeSelectedAdministrator(selectedAdmin) {
+      var _this5 = this;
+
+      this.actionDone = false;
+      axios["delete"]("/remove-secondary-user/".concat(selectedAdmin.id, "/").concat(requestEncrypt)).then(function (returnWrapper) {
+        if (returnWrapper.data.success) {
+          _this5.actionDone = true;
+          _this5.admins = _this5.admins.filter(function (admin) {
+            return admin.id !== selectedAdmin.id;
+          });
         }
       });
     }
@@ -28320,7 +28437,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "col-12 row-fluid" }, [
     _c("div", { staticClass: "container row mx-auto" }, [
-      _c("div", { staticClass: "col-6 mx-auto border" }, [
+      _c("div", { staticClass: "col-6 mx-auto my-3" }, [
         _c("h4", { staticClass: "text-white my-3 text-center" }, [
           _vm._v("App Manager"),
         ]),
@@ -28359,74 +28476,76 @@ var render = function () {
         ),
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-6 mx-auto border" }, [
-        _c("h4", { staticClass: "text-white my-3 text-center" }, [
-          _vm._v("Subscription Manager"),
-        ]),
-        _vm._v(" "),
-        _c(
-          "ul",
-          { staticClass: "list-unstyled text-white" },
-          [
-            _vm._l(_vm.subscriptions, function (subscription) {
-              return _c(
-                "li",
-                { key: subscription.id, staticClass: "text-white" },
-                [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-check-label",
-                        attrs: { for: subscription.name + "SubSwitch" },
-                      },
-                      [_vm._v(_vm._s(subscription.name))]
-                    ),
-                  ]),
-                ]
-              )
-            }),
+      _vm.applications.length >= 1
+        ? _c("div", { staticClass: "col-6 mx-auto my-3" }, [
+            _c("h4", { staticClass: "text-white my-3 text-center" }, [
+              _vm._v("Subscription Manager"),
+            ]),
             _vm._v(" "),
-            _vm._l(_vm.applications, function (application) {
-              return _c(
-                "li",
-                { key: application.id, staticClass: "text-white" },
-                [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-label",
-                        attrs: { for: application.name + "AppSwitch" },
-                      },
-                      [_vm._v(_vm._s(application.name))]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-success float-end",
-                        attrs: {
-                          type: "button",
-                          id: application.name + "AppSwitch",
-                        },
-                        on: {
-                          click: function ($event) {
-                            $event.preventDefault()
-                            return _vm.addAppToSubscription(application)
+            _c(
+              "ul",
+              { staticClass: "list-unstyled text-white" },
+              [
+                _vm._l(_vm.subscriptions, function (subscription) {
+                  return _c(
+                    "li",
+                    { key: subscription.id, staticClass: "text-white" },
+                    [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "form-check-label",
+                            attrs: { for: subscription.name + "SubSwitch" },
                           },
-                        },
-                      },
-                      [_vm._v("Subscribe")]
-                    ),
-                  ]),
-                ]
-              )
-            }),
-          ],
-          2
-        ),
-      ]),
+                          [_vm._v(_vm._s(subscription.name))]
+                        ),
+                      ]),
+                    ]
+                  )
+                }),
+                _vm._v(" "),
+                _vm._l(_vm.applications, function (application) {
+                  return _c(
+                    "li",
+                    { key: application.id, staticClass: "text-white" },
+                    [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "form-label",
+                            attrs: { for: application.name + "AppSwitch" },
+                          },
+                          [_vm._v(_vm._s(application.name))]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-success float-end",
+                            attrs: {
+                              type: "button",
+                              id: application.name + "AppSwitch",
+                            },
+                            on: {
+                              click: function ($event) {
+                                $event.preventDefault()
+                                return _vm.addAppToSubscription(application)
+                              },
+                            },
+                          },
+                          [_vm._v("Subscribe")]
+                        ),
+                      ]),
+                    ]
+                  )
+                }),
+              ],
+              2
+            ),
+          ])
+        : _vm._e(),
     ]),
     _vm._v(" "),
     _c(
@@ -28440,7 +28559,8 @@ var render = function () {
             "a",
             {
               key: subscription.id,
-              staticClass: "text-decoration-none bg-dark card col-4 border-0",
+              staticClass:
+                "text-decoration-none bg-dark card col-4 img-thumbnail",
               attrs: {
                 href:
                   "http://" +
@@ -28450,12 +28570,14 @@ var render = function () {
             },
             [
               _c("img", {
-                staticClass: "card-body img-fluid",
-                attrs: { src: "/img/" + subscription.subdomain + ".png" },
+                style:
+                  "height:120px;background: url('/img/" +
+                  subscription.subdomain +
+                  ".png');background-position:25% 50%;",
               }),
               _vm._v(" "),
-              _c("div", { staticClass: "card-footer text-white" }, [
-                _c("p", [_vm._v(_vm._s(subscription.name))]),
+              _c("p", { staticClass: "text-white" }, [
+                _vm._v(_vm._s(subscription.name)),
               ]),
             ]
           )
@@ -28489,11 +28611,26 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row mx-auto container" }, [
-    _c("h4", { staticClass: "text-white" }, [_vm._v("Account Settings")]),
+    _c("h4", { staticClass: "text-white" }, [
+      _vm._v("Account Settings "),
+      _c(
+        "a",
+        {
+          staticClass: "float-end btn text-white",
+          on: {
+            click: function ($event) {
+              $event.preventDefault()
+              _vm.showNewUserForm = !_vm.showNewUserForm
+            },
+          },
+        },
+        [_vm._v("Add User +")]
+      ),
+    ]),
     _vm._v(" "),
     _c("hr", { staticClass: "bg-white" }),
     _vm._v(" "),
-    _c("div", { staticClass: "row col-3" }, [
+    _c("div", { staticClass: "row col-4" }, [
       _c(
         "div",
         {
@@ -28652,7 +28789,7 @@ var render = function () {
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "card bg-dark col-7 text-white border-secondary mx-auto" },
+      { staticClass: "card bg-dark col-8 text-white border-secondary ms-auto" },
       [
         _c("h5", { staticClass: "card-header border-secondary py-2" }, [
           _vm._v("Reset Password"),
@@ -28793,6 +28930,268 @@ var render = function () {
         ),
       ]
     ),
+    _vm._v(" "),
+    _vm.showNewUserForm == true
+      ? _c(
+          "div",
+          {
+            staticClass:
+              "my-3 card bg-dark col-12 text-white border-secondary mx-auto",
+          },
+          [
+            _c(
+              "h5",
+              { staticClass: "card-header border-secondary d-inline py-2" },
+              [
+                _vm._v("Add More Users "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "float-end d-inline text-white",
+                    staticStyle: {
+                      "text-decoration": "none",
+                      cursor: "pointer",
+                    },
+                    on: {
+                      click: function ($event) {
+                        $event.preventDefault()
+                        _vm.showNewUserForm = false
+                      },
+                    },
+                  },
+                  [_vm._v("×")]
+                ),
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "form",
+              {
+                on: {
+                  submit: function ($event) {
+                    $event.preventDefault()
+                    return _vm.addNewAdministrator.apply(null, arguments)
+                  },
+                },
+              },
+              [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("div", { staticClass: "row mb-2" }, [
+                    _vm._m(4),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-auto w-100" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.newUserForm.currentPass,
+                            expression: "newUserForm.currentPass",
+                          },
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "password", required: "" },
+                        domProps: { value: _vm.newUserForm.currentPass },
+                        on: {
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.newUserForm,
+                              "currentPass",
+                              $event.target.value
+                            )
+                          },
+                        },
+                      }),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row mb-2" }, [
+                    _vm._m(5),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-auto w-100" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.newUserForm.name,
+                            expression: "newUserForm.name",
+                          },
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", required: "" },
+                        domProps: { value: _vm.newUserForm.name },
+                        on: {
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.newUserForm,
+                              "name",
+                              $event.target.value
+                            )
+                          },
+                        },
+                      }),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row mb-2" }, [
+                    _vm._m(6),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-auto w-100" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.newUserForm.email,
+                            expression: "newUserForm.email",
+                          },
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", required: "" },
+                        domProps: { value: _vm.newUserForm.email },
+                        on: {
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.newUserForm,
+                              "email",
+                              $event.target.value
+                            )
+                          },
+                        },
+                      }),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row mb-2" }, [
+                    _vm._m(7),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-auto w-100" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.newUserForm.password,
+                            expression: "newUserForm.password",
+                          },
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "password", required: "" },
+                        domProps: { value: _vm.newUserForm.password },
+                        on: {
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.newUserForm,
+                              "password",
+                              $event.target.value
+                            )
+                          },
+                        },
+                      }),
+                    ]),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-footer border-secondary" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "my-2 btn btn-success text-white w-25",
+                      attrs: {
+                        type: "submit",
+                        disabled: _vm.actionDone == false,
+                      },
+                    },
+                    [_vm._v(_vm._s(_vm.withoutError == true ? "✔" : "Confirm"))]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "p",
+                    {
+                      class: [
+                        _vm.userPassError == true
+                          ? "text-danger float-end my-2"
+                          : "d-none",
+                      ],
+                    },
+                    [
+                      _c("small", { staticClass: "text-danger" }, [
+                        _vm._v(_vm._s(_vm.error.text)),
+                      ]),
+                    ]
+                  ),
+                ]),
+              ]
+            ),
+          ]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.admins.length > 0
+      ? _c(
+          "div",
+          {
+            staticClass:
+              "my-3 card bg-dark col-12 text-white border-secondary mx-auto",
+          },
+          [
+            _c(
+              "h5",
+              { staticClass: "card-header text-white py-2 border-secondary" },
+              [_vm._v("Admin List")]
+            ),
+            _vm._v(" "),
+            _c("table", { staticClass: "table table-dark table-hover" }, [
+              _vm._m(8),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.admins, function (admin, index) {
+                  return _c("tr", { key: admin.id }, [
+                    _c("th", [_vm._v(_vm._s(index + 1))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(admin.name))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(admin.email))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("@" + _vm._s(admin.user_type))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-danger text-white",
+                          on: {
+                            click: function ($event) {
+                              $event.preventDefault()
+                              return _vm.removeSelectedAdministrator(admin)
+                            },
+                          },
+                        },
+                        [_vm._v("Remove")]
+                      ),
+                    ]),
+                  ])
+                }),
+                0
+              ),
+            ]),
+          ]
+        )
+      : _vm._e(),
   ])
 }
 var staticRenderFns = [
@@ -28829,6 +29228,58 @@ var staticRenderFns = [
     return _c("div", { staticClass: "col-auto" }, [
       _c("label", { staticClass: "col-form-label" }, [
         _vm._v("Confirm Password"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-auto" }, [
+      _c("label", { staticClass: "col-form-label" }, [
+        _vm._v("Current Password"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-auto" }, [
+      _c("label", { staticClass: "col-form-label" }, [_vm._v("Name")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-auto" }, [
+      _c("label", { staticClass: "col-form-label" }, [_vm._v("Email")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-auto" }, [
+      _c("label", { staticClass: "col-form-label" }, [_vm._v("Password")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Email")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Type")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Actions")]),
       ]),
     ])
   },

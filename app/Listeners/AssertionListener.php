@@ -12,7 +12,7 @@ class AssertionListener
     {   
         $subList = array();
         foreach(auth()->user()->subscription_list as $subId){
-            array_push($subList, json_encode(config('applist.apps')[$subId]));
+            array_push($subList, json_encode(config('app_data.apps')[$subId]));
         }
 
         $event->attribute_statement

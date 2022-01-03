@@ -1,8 +1,8 @@
 <template>
     <div class="row mx-auto container">
-        <h4 class="text-white">Account Settings</h4>
+        <h4 class="text-white">Account Settings <a class="float-end btn text-white" @click.prevent="showNewUserForm = !showNewUserForm;">Add User &plus;</a></h4>
         <hr class="bg-white">
-        <div class="row col-3">
+        <div class="row col-4">
             <div class="card bg-dark text-white border-secondary mx-auto mb-3">
                 <h5 class="card-header border-secondary py-2">Active User Data</h5>
                 <div class="card-body">
@@ -32,7 +32,7 @@
                 </div>
             </div>
         </div>
-        <div class="card bg-dark col-7 text-white border-secondary mx-auto">
+        <div class="card bg-dark col-8 text-white border-secondary ms-auto">
             <h5 class="card-header border-secondary py-2">Reset Password</h5>
             <form @submit.prevent="requestPasswordChange">
                 <div class="card-body">
@@ -67,16 +67,84 @@
                 </div>
             </form>
         </div>
+        <div class="my-3 card bg-dark col-12 text-white border-secondary mx-auto" v-if="showNewUserForm == true">
+            <h5 class="card-header border-secondary d-inline py-2">Add More Users <a class="float-end d-inline text-white" style="text-decoration:none;cursor:pointer" @click.prevent="showNewUserForm = false;">&times;</a> </h5>
+            <form @submit.prevent="addNewAdministrator">
+                <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-auto">
+                            <label class="col-form-label">Current Password</label>
+                        </div>
+                        <div class="col-auto w-100">
+                            <input class="form-control" type="password" v-model="newUserForm.currentPass" required>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-auto">
+                            <label class="col-form-label">Name</label>
+                        </div>
+                        <div class="col-auto w-100">
+                            <input class="form-control" type="text" v-model="newUserForm.name" required>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-auto">
+                            <label class="col-form-label">Email</label>
+                        </div>
+                        <div class="col-auto w-100">
+                            <input class="form-control" type="text" v-model="newUserForm.email" required>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-auto">
+                            <label class="col-form-label">Password</label>
+                        </div>
+                        <div class="col-auto w-100">
+                            <input class="form-control" type="password" v-model="newUserForm.password" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer border-secondary">
+                    <button type="submit" :disabled="actionDone==false" class="my-2 btn btn-success text-white w-25">{{withoutError == true ? '&#10004;' : 'Confirm'}}</button>
+                      <p :class="[ userPassError == true ? 'text-danger float-end my-2' : 'd-none']"><small class="text-danger">{{error.text}}</small></p>
+                </div>
+            </form>
+        </div>
+        <div class="my-3 card bg-dark col-12 text-white border-secondary mx-auto" v-if="admins.length > 0">
+            <h5 class="card-header text-white py-2 border-secondary">Admin List</h5>
+            <table class="table table-dark table-hover">
+                <thead>
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(admin,index) in admins" :key="admin.id">
+                        <th>{{index + 1}}</th>
+                        <td>{{admin.name}}</td>
+                        <td>{{admin.email}}</td>
+                        <td>@{{admin.user_type}}</td>
+                        <td><a class="btn btn-danger text-white" @click.prevent="removeSelectedAdministrator(admin)">Remove</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </template>
 
 <script>
 let errorInterval;
+let requestEncrypt;
 
 export default {
-    props : ['user'],
+    props : ['user', 'secondary_users'],
     data() {
         return  {
+            admins : JSON.parse(this.secondary_users),
             error: {
                 text : ''
             },
@@ -90,15 +158,26 @@ export default {
                 currentPass : ''
             },
             confirmPass : '',
+            userPassError : false,
             passError : false,
             withoutError : false,
             showLogoutForm : false,
+            showNewUserForm : false,
             logoutStatus : {
                 status : false,
                 type : '',
                 message : '',
+            },
+            newUserForm : {
+                name : '',
+                email : '',
+                password : '',
+                currentPass : ''
             }
         }
+    },
+    created() {
+        requestEncrypt = btoa(this.activeUser.company);
     },
     methods : {
         requestPasswordChange() {
@@ -204,6 +283,47 @@ export default {
                             this.showLogoutForm = false;
                         },1000);
                     }
+                }
+            });
+        },
+        addNewAdministrator(){
+            this.actionDone = false;
+            axios.post('/add-secondary-user', this.newUserForm)
+            .then(returnWrapper => {
+                if(returnWrapper){
+                            if(returnWrapper.data.error){
+                                this.error.text = returnWrapper.data.error;
+                                this.userPassError = true;
+                                errorInterval = setTimeout(()=>{
+                                    this.userPassError = false;
+                                    this.actionDone = true;
+                                },1000)
+                            }
+                            else if(returnWrapper.data.success){
+                                this.withoutError = true;
+                                this.admins = returnWrapper.data.updatedUserList;
+                                setTimeout(()=>{
+                                    this.actionDone = true;
+                                    this.withoutError = false;
+                                    this.newUserForm = {
+                                        name : '',
+                                        email : '',
+                                        password : '',
+                                        currentPass : ''
+                                    };
+                                },1000);
+                            }
+                        }
+                
+            });
+        },
+        removeSelectedAdministrator(selectedAdmin){
+            this.actionDone = false;
+            axios.delete(`/remove-secondary-user/${selectedAdmin.id}/${requestEncrypt}`)
+            .then(returnWrapper => {
+                if(returnWrapper.data.success){
+                    this.actionDone = true;
+                    this.admins = this.admins.filter(admin => { return admin.id !== selectedAdmin.id; });
                 }
             });
         }

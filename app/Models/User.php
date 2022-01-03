@@ -21,6 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'company',
+        'user_type',
+        'user_group'
     ];
 
     /**
@@ -42,4 +45,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'subscription_list' => 'array'
     ];
+
+
+    public function admins(){
+        return $this->hasMany(SecondaryUser::class, 'ownership_id', 'id');
+    }
 }

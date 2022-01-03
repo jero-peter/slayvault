@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\SecondaryUser;
+
 
 class AdminController extends Controller
 {
@@ -55,7 +57,7 @@ class AdminController extends Controller
     public function addSubscription(Request $request){
         if(auth()->user()){
             $user = auth()->user();
-            $appListing = config('applist.apps');
+            $appListing = config('app_data.apps');
             $subscribedApplicationListing = $request->all();
             $constructedIdArray = array();
             foreach($subscribedApplicationListing as $subscription){
@@ -67,4 +69,37 @@ class AdminController extends Controller
             return response()->json(['user' => $user]);
         }
     }
+
+    public function addSecondaryUser(Request $request){
+        if(auth()->user()){
+            if(\Hash::check($request->get('currentPass'), auth()->user()->password)){
+                    $user = new SecondaryUser;
+                    $user->name = $request->get('name');
+                    $user->email = $request->get('email');
+                    $user->password = \Hash::make($request->get('password'));
+                    $user->ownership_id = auth()->user()->id;
+                    $user->company = auth()->user()->company;
+
+                    $user->save();
+
+                    return response()->json(['success' => 'Secondary Administrator Added Successfully', 'updatedUserList' => auth()->user()->admins]);
+            }else{
+                return response()->json(['error' => 'Wrong Owner Password']);
+            }
+        }
+    }
+
+    public function removeSecondaryUser($id, $encodedRequestCode, Request $request){
+        if(auth()->user()){
+            // if(\Hash::check($request->get('currentPass'), auth()->user()->password)){
+                if(base64_decode($encodedRequestCode) == auth()->user()->company){
+                    $selectedSecondaryAdmin = SecondaryUser::findOrFail($id);
+                    $selectedSecondaryAdmin->delete();
+                    return response()->json(['success' => 'User Removed Successfully']);
+                }
+                
+            // }
+        }
+    }
+
 }
