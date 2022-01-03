@@ -11,7 +11,7 @@ return [
     |
      */
     // Outputs data to your laravel.log file for debugging
-    'debug' => false,
+    'debug' => true,
     // Define the email address field name in the users table
     'email_field' => 'email',
     // The URI to your login page
@@ -75,5 +75,5 @@ return [
     ],
 
     // List of guards saml idp will catch Authenticated, Login and Logout events
-    'guards' => ['web']
+    'guards' => ['admin','secondary_admin']
 ];

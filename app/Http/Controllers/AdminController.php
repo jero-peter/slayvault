@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\SecondaryUser;
+use App\Models\SecondaryAdmin;
 
 
 class AdminController extends Controller
@@ -16,7 +16,14 @@ class AdminController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth:secondary_admin,admin']);
+        
+        // $this->middleware(function ($request, $next) {
+
+        //     $this->user = Auth::user();
+
+        //     return $next($request);
+        // });
     }
 
     /**
@@ -73,7 +80,7 @@ class AdminController extends Controller
     public function addSecondaryUser(Request $request){
         if(auth()->user()){
             if(\Hash::check($request->get('currentPass'), auth()->user()->password)){
-                    $user = new SecondaryUser;
+                    $user = new SecondaryAdmin;
                     $user->name = $request->get('name');
                     $user->email = $request->get('email');
                     $user->password = \Hash::make($request->get('password'));
@@ -93,7 +100,7 @@ class AdminController extends Controller
         if(auth()->user()){
             // if(\Hash::check($request->get('currentPass'), auth()->user()->password)){
                 if(base64_decode($encodedRequestCode) == auth()->user()->company){
-                    $selectedSecondaryAdmin = SecondaryUser::findOrFail($id);
+                    $selectedSecondaryAdmin = SecondaryAdmin::findOrFail($id);
                     $selectedSecondaryAdmin->delete();
                     return response()->json(['success' => 'User Removed Successfully']);
                 }

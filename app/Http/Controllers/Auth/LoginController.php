@@ -6,6 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+
+use App\Models\SecondaryUser;
+
+
 class LoginController extends Controller
 {
     /*
@@ -38,5 +46,47 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+
+        if (Auth::guard('admin')->attempt($credentials)) {
+            $request->session()->regenerate();
+
+            return redirect()->intended('home');
+
+        }
+
+        else{
+
+            Auth::guard('secondary_admin')->attempt($credentials);
+
+            $request->session()->regenerate();
+
+            return redirect()->intended('home');
+        }
+
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
+    }
+
+
+    public function logout(Request $request){
+        
+        \Session::flush();
+
+        if(Auth::guard('admin')){
+            Auth::guard('admin')->logout();
+        }else{
+            Auth::guard('secondary_admin')->logout();
+        }
+
+        return back();
+    }
 
 }
