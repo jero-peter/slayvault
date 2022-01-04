@@ -38,11 +38,11 @@ return [
             'logout' => 'http://service1.saaslay.test/slayvault/sls',
             'certificate' => '',
         ],
-        'aHR0cDovL3NlcnZpY2UyLnNhYXNsYXkudGVzdC9zbGF5dmF1bHQvYWNz' => [
-            'destination' => 'http://service2.saaslay.test/slayvault/acs',
-            'logout' => 'http://service2.saaslay.test/slayvault/sls',
-            'certificate' => ''
-        ]
+        // 'aHR0cDovL3NlcnZpY2UyLnNhYXNsYXkudGVzdC9zbGF5dmF1bHQvYWNz' => [
+        //     'destination' => 'http://service2.saaslay.test/slayvault/acs',
+        //     'logout' => 'http://service2.saaslay.test/slayvault/sls',
+        //     'certificate' => ''
+        // ]
         
         // Base64 encoded ACS URL
         // 'aHR0cHM6Ly9teWZhY2Vib29rd29ya3BsYWNlLmZhY2Vib29rLmNvbS93b3JrL3NhbWwucGhw' => [
