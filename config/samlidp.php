@@ -33,9 +33,9 @@ return [
     // list of all service providers
     'sp' => [
 
-        'aHR0cDovL3NlcnZpY2UxLnNhYXNsYXkudGVzdC9zbGF5dmF1bHQvYWNz' => [
-            'destination' => 'http://service1.saaslay.test/slayvault/acs',
-            'logout' => 'http://service1.saaslay.test/slayvault/sls',
+        'aHR0cDovL3RpY2tldC5zYWFzbGF5LnRlc3Qvc2xheXZhdWx0L2Fjcw==' => [
+            'destination' => 'http://ticket.saaslay.test/slayvault/acs',
+            'logout' => 'http://ticket.saaslay.test/slayvault/sls',
             'certificate' => '',
         ],
         // 'aHR0cDovL3NlcnZpY2UyLnNhYXNsYXkudGVzdC9zbGF5dmF1bHQvYWNz' => [

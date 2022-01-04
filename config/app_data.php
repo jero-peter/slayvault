@@ -6,7 +6,7 @@ return [
             0 => [
                 'id' => 0,
                 'name' => 'Ticketing',
-                'subdomain' => 'service1',
+                'subdomain' => 'ticket',
                 'activeByDefault' => true
             ],
             1 => [
