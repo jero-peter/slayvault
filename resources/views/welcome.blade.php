@@ -13,7 +13,7 @@
                 <img class="d-block mx-auto my-5" src="https://media.giphy.com/media/tBlTkwiRUSMeIxjOAv/giphy.gif" >
                 <h1 class="text-white text-center mt-4">Welcome to SlayVault</h1>
                 <h6 class="text-white text-center">Saaslay's Official IdP & Account Management Application.</h6>
-                @if(auth('secondary_user')->user() || auth()->user())
+                @if(auth('secondary_admin')->user() || auth()->user())
                     <a href="/home" class="btn btn-danger text-white my-2">Open SlayVault</a>
                 @endif
             </div>
