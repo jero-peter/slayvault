@@ -17,13 +17,7 @@ class AdminController extends Controller
     public function __construct()
     {
         $this->middleware(['auth:secondary_admin,admin']);
-        
-        // $this->middleware(function ($request, $next) {
 
-        //     $this->user = Auth::user();
-
-        //     return $next($request);
-        // });
     }
 
     /**
@@ -107,6 +101,10 @@ class AdminController extends Controller
                 
             // }
         }
+    }
+
+    public function appData($applicationName){
+        return response()->json($applicationName);
     }
 
 }

@@ -27,7 +27,7 @@
         </div>
         <div class="col-6 text-center row mx-auto">
             <h4 class="text-white my-3">Apps</h4>
-            <a v-for="subscription in subscriptions" :key="subscription.id" :href="`http://${subscription.subdomain}.saaslay.test/slayvault/login`" class="text-decoration-none bg-dark card col-4 img-thumbnail">
+            <a v-for="subscription in subscriptions" :key="subscription.id" :href="`/home/list/${subscription.subdomain}`" class="text-decoration-none bg-dark card col-4 img-thumbnail">
                 <img :style="`height:120px;background: url('/img/${subscription.subdomain}.png');background-position:25% 50%;`">
                 <p class="text-white">{{subscription.name}}</p>
             </a>

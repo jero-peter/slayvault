@@ -21,6 +21,7 @@ Auth::routes();
 
 
 Route::get('/home', [App\Http\Controllers\AdminController::class, 'index'])->name('home');
+Route::get('/home/list/{applicationName}', [App\Http\Controllers\AdminController::class, 'appData']);
 
 /*
  Password & Unauthorize Routes

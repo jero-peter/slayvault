@@ -28561,12 +28561,7 @@ var render = function () {
               key: subscription.id,
               staticClass:
                 "text-decoration-none bg-dark card col-4 img-thumbnail",
-              attrs: {
-                href:
-                  "http://" +
-                  subscription.subdomain +
-                  ".saaslay.test/slayvault/login",
-              },
+              attrs: { href: "/home/list/" + subscription.subdomain },
             },
             [
               _c("img", {
