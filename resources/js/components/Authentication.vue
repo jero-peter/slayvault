@@ -133,6 +133,29 @@
                 </tbody>
             </table>
         </div>
+        <div class="my-3 card bg-dark col-12 text-white border-secondary mx-auto" v-if="clients.length > 0">
+            <h5 class="card-header text-white py-2 border-secondary">Client List</h5>
+            <table class="table table-dark table-hover">
+                <thead>
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">UUID</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(client,index) in clients" :key="client.id">
+                        <th>{{index + 1}}</th>
+                        <td>{{client.name}}</td>
+                        <td>{{client.uuid}}</td>
+                        <td>@{{client.user_type}}</td>
+                        <td><a class="btn btn-danger text-white" @click.prevent="removeSelectedAdministrator(client)">Remove</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </template>
 
@@ -141,10 +164,11 @@ let errorInterval;
 let requestEncrypt;
 
 export default {
-    props : ['user', 'secondary_users'],
+    props : ['user', 'secondary_users', 'guest_users'],
     data() {
         return  {
             admins : JSON.parse(this.secondary_users),
+            clients : JSON.parse(this.guest_users),
             error: {
                 text : ''
             },

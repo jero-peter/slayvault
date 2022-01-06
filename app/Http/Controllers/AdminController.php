@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\SecondaryAdmin;
+use App\Models\Client;
 
+
+use Log;
 
 class AdminController extends Controller
 {
@@ -16,7 +19,7 @@ class AdminController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth:secondary_admin,admin']);
+        $this->middleware(['auth:secondary_admin,admin'])->except('createClient');
 
     }
 
@@ -107,4 +110,20 @@ class AdminController extends Controller
         return response()->json($applicationName);
     }
 
+    public function createClient(Request $request, $c_uuid){
+        $user = $request->user();
+        Log::info($request->get('uuid'));
+        $checkExistenceFlag = Client::where('uuid',$request->get('uuid'))->first();
+        if(!$checkExistenceFlag){
+            if($user->c_uuid == $c_uuid){
+                $client = new Client;
+                $client->name = $request->get('name');
+                $client->uuid = $request->get('uuid');
+                $client->ownership_id = $user->id;
+                $client->save();
+
+                return response(201);
+            }
+        }
+    }
 }

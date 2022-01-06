@@ -26,7 +26,9 @@ class Admin extends Authenticatable
         'password',
         'company',
         'user_type',
-        'user_group'
+        'user_group',
+        'c_uuid',
+        'c_token'
     ];
 
     /**
@@ -37,6 +39,8 @@ class Admin extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'c_token',
+        'c_uuid'
     ];
 
     /**
@@ -52,5 +56,9 @@ class Admin extends Authenticatable
 
     public function admins(){
         return $this->hasMany(SecondaryAdmin::class, 'ownership_id', 'id');
+    }
+
+    public function clients(){
+        return $this->hasMany(Client::class, 'ownership_id','id');
     }
 }

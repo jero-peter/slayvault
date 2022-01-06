@@ -23,6 +23,8 @@ class CreateUsersTable extends Migration
             $table->integer('user_group')->default(1);
             $table->string('password');
             $table->json('subscription_list')->default('[0]');
+            $table->string('c_uuid')->unique();
+            $table->string('c_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -5485,13 +5485,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var errorInterval;
 var requestEncrypt;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['user', 'secondary_users'],
+  props: ['user', 'secondary_users', 'guest_users'],
   data: function data() {
     return {
       admins: JSON.parse(this.secondary_users),
+      clients: JSON.parse(this.guest_users),
       error: {
         text: ''
       },
@@ -29187,6 +29211,59 @@ var render = function () {
           ]
         )
       : _vm._e(),
+    _vm._v(" "),
+    _vm.clients.length > 0
+      ? _c(
+          "div",
+          {
+            staticClass:
+              "my-3 card bg-dark col-12 text-white border-secondary mx-auto",
+          },
+          [
+            _c(
+              "h5",
+              { staticClass: "card-header text-white py-2 border-secondary" },
+              [_vm._v("Client List")]
+            ),
+            _vm._v(" "),
+            _c("table", { staticClass: "table table-dark table-hover" }, [
+              _vm._m(9),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.clients, function (client, index) {
+                  return _c("tr", { key: client.id }, [
+                    _c("th", [_vm._v(_vm._s(index + 1))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(client.name))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(client.uuid))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("@" + _vm._s(client.user_type))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-danger text-white",
+                          on: {
+                            click: function ($event) {
+                              $event.preventDefault()
+                              return _vm.removeSelectedAdministrator(client)
+                            },
+                          },
+                        },
+                        [_vm._v("Remove")]
+                      ),
+                    ]),
+                  ])
+                }),
+                0
+              ),
+            ]),
+          ]
+        )
+      : _vm._e(),
   ])
 }
 var staticRenderFns = [
@@ -29271,6 +29348,24 @@ var staticRenderFns = [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Name")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Email")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Type")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Actions")]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("UUID")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Type")]),
         _vm._v(" "),

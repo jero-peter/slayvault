@@ -32,6 +32,9 @@ class AssertionListener
 
         $event->attribute_statement
             ->addAttribute(new Attribute('Subscription', $subList))
+            ->addAttribute(new Attribute('Company', $config_auth->company))
+            ->addAttribute(new Attribute('C_UUID', $config_auth->c_uuid))
+            ->addAttribute(new Attribute('SV_TOKEN', $config_auth->c_token))
             ->addAttribute(new Attribute(ClaimTypes::PPID, $config_auth->id))
             ->addAttribute(new Attribute(ClaimTypes::NAME, $config_auth->name))
             ->addAttribute(new Attribute(ClaimTypes::ROLE , $config_auth->user_type))
