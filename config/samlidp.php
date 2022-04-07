@@ -25,7 +25,7 @@ return [
     // Name of the certificate key PEM file
     'keyname' => 'key.pem',
     // Encrypt requests and responses
-    'encrypt_assertion' => false,
+    'encrypt_assertion' => true,
     // Make sure messages are signed
     'messages_signed' => true,
     // Defind what digital algorithm you want to use
