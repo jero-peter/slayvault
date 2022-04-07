@@ -25,19 +25,13 @@ return [
     // Name of the certificate key PEM file
     'keyname' => 'key.pem',
     // Encrypt requests and responses
-    'encrypt_assertion' => true,
+    'encrypt_assertion' => false,
     // Make sure messages are signed
     'messages_signed' => true,
     // Defind what digital algorithm you want to use
     'digest_algorithm' => \RobRichards\XMLSecLibs\XMLSecurityDSig::SHA1,
     // list of all service providers
     'sp' => [
-
-        'aHR0cDovL3N1cHBvcnQtc2xheWFpZC5oZXJva3VhcHAuY29tL3NsYXl2YXVsdC9hY3M=' => [
-            'destination' => 'http://support-slayaid.herokuapp.com/slayvault/acs',
-            'logout' => 'http://support-slayaid.herokuapp.com/slayvault/sls',
-            'certificate' => '',
-        ],
         'aHR0cHM6Ly9zdXBwb3J0LXNsYXlhaWQuaGVyb2t1YXBwLmNvbS9zbGF5dmF1bHQvYWNz' =>[
             'destination' => 'https://support-slayaid.herokuapp.com/slayvault/acs',
             'logout' => 'https://support-slayaid.herokuapp.com/slayvault/sls',
