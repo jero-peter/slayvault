@@ -33,14 +33,14 @@ return [
     // list of all service providers
     'sp' => [
 
-        'aHR0cHM6Ly90aWNrZXQuc2Fhc2xheS50ZXN0L3NsYXl2YXVsdC9hY3M=' => [
-            'destination' => 'https://ticket.saaslay.test/slayvault/acs',
-            'logout' => 'https://ticket.saaslay.test/slayvault/sls',
-            'certificate' => '',
-        ],
-        'aHR0cHM6Ly9zdXBwb3J0LnNhYXNsYXkudGVzdC9zbGF5dmF1bHQvYWNz' =>[
-            'destination' => 'https://support.saaslay.test/slayvault/acs',
-            'logout' => 'https://support.saaslay.test/slayvault/sls',
+        // 'aHR0cHM6Ly90aWNrZXQuc2Fhc2xheS50ZXN0L3NsYXl2YXVsdC9hY3M=' => [
+        //     'destination' => 'https://ticket.saaslay.test/slayvault/acs',
+        //     'logout' => 'https://ticket.saaslay.test/slayvault/sls',
+        //     'certificate' => '',
+        // ],
+        'aHR0cHM6Ly9zdXBwb3J0LXNsYXlhaWQuaGVyb2t1YXBwLmNvbS9zbGF5dmF1bHQvYWNz' =>[
+            'destination' => 'https://support-slayaid.herokuapp.com/slayvault/acs',
+            'logout' => 'https://support-slayaid.herokuapp.com/slayvault/sls',
             'certificate' => '',
         ],
 	/**
