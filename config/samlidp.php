@@ -33,25 +33,30 @@ return [
     // list of all service providers
     'sp' => [
 
-        'aHR0cDovL3RpY2tldC5zYWFzbGF5LnRlc3Qvc2xheXZhdWx0L2Fjcw==' => [
-            'destination' => 'http://ticket.saaslay.test/slayvault/acs',
-            'logout' => 'http://ticket.saaslay.test/slayvault/sls',
+        'aHR0cHM6Ly90aWNrZXQuc2Fhc2xheS50ZXN0L3NsYXl2YXVsdC9hY3M=' => [
+            'destination' => 'https://ticket.saaslay.test/slayvault/acs',
+            'logout' => 'https://ticket.saaslay.test/slayvault/sls',
             'certificate' => '',
         ],
-        // 'aHR0cDovL3NlcnZpY2UyLnNhYXNsYXkudGVzdC9zbGF5dmF1bHQvYWNz' => [
-        //     'destination' => 'http://service2.saaslay.test/slayvault/acs',
-        //     'logout' => 'http://service2.saaslay.test/slayvault/sls',
+        'aHR0cHM6Ly9zdXBwb3J0LnNhYXNsYXkudGVzdC9zbGF5dmF1bHQvYWNz' =>[
+            'destination' => 'https://support.saaslay.test/slayvault/acs',
+            'logout' => 'https://support.saaslay.test/slayvault/sls',
+            'certificate' => '',
+        ],
+	/**
+	   This is a loop back test for the service -> do not let this go into production
+	*/
+	    // 'aHR0cDovLzEyNy4wLjAuMTo4MDAwL3NsYXl2YXVsdC9hY3M=' =>[
+        //     'destination' => 'https://127.0.0.1:8000/slayvault/acs',
+        //     'logout' => 'https://127.0.0.1:8000/slayvault/sls',
+        //     'certificate' => '',
+        // ],
+        // 'aHR0cDovL2Y3NzktMTAzLTE0OC0yMC00Ni5uZ3Jvay5pby9zbGF5dmF1bHQvYWNz ' => [
+        //     'destination' => 'https://f779-103-148-20-46.ngrok.io/slayvault/acs',
+        //     'logout' => 'https://f779-103-148-20-46.ngrok.io/slayvault/sls',
         //     'certificate' => ''
         // ]
         
-        // Base64 encoded ACS URL
-        // 'aHR0cHM6Ly9teWZhY2Vib29rd29ya3BsYWNlLmZhY2Vib29rLmNvbS93b3JrL3NhbWwucGhw' => [
-        //     // Your destination is the ACS URL of the Service Provider
-        //     'destination' => 'https://myfacebookworkplace.facebook.com/work/saml.php',
-        //     'logout' => 'https://myfacebookworkplace.facebook.com/work/sls.php',
-        //     'certificate' => '',
-        //     'query_params' => false
-        // ]
     ],
 
     // If you need to redirect after SLO depending on SLO initiator

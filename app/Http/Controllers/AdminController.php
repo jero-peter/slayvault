@@ -107,12 +107,15 @@ class AdminController extends Controller
     }
 
     public function appData($applicationName){
+        // return response()->json($applicationName);
+        //  This is suppose to fetch the data of all the information
+        // related to the subdomain of the requested admin
         return response()->json($applicationName);
     }
 
     public function createClient(Request $request, $c_uuid){
         $user = $request->user();
-        Log::info($request->get('uuid'));
+        // Log::info($request->get('uuid'));
         $checkExistenceFlag = Client::where('uuid',$request->get('uuid'))->first();
         if(!$checkExistenceFlag){
             if($user->c_uuid == $c_uuid){

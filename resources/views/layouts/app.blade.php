@@ -13,8 +13,7 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -82,5 +81,6 @@
             @yield('content')
         </main>
     </div>
+    {{-- <script src='https://support.saaslay.test/js/p2p-spa.js' customer-id='2feed771-c562-49ee-8f72-1a21c333305a' customer-name='client' customer-company='genericCompany' identity='MXx3MWh5UDc2NndmdEJkT0twRXEzU1dpTDhGdFFMb2laelFLdWRjalhV' script-id='SPA-slayvault'></script></body> --}}
 </body>
 </html>

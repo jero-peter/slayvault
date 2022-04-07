@@ -25,6 +25,8 @@ class AssertionListener
             }
         }else{
             $subIdCollection = $config_auth->owner->subscription_list;
+
+
             foreach($subIdCollection as $subId){
                 array_push($subList, json_encode(config('app_data.apps')[$subId]));
             }

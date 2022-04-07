@@ -11,8 +11,8 @@ return [
             ],
             1 => [
                 'id' => 1,
-                'name' => 'Friends',
-                'subdomain' => 'service2',
+                'name' => 'Support',
+                'subdomain' => 'support',
                 'activeByDefault' => false
             ]
         ],
