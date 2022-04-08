@@ -33,8 +33,8 @@ return [
     // list of all service providers
     'sp' => [
         'aHR0cHM6Ly9zdXBwb3J0LXNsYXlhaWQuaGVyb2t1YXBwLmNvbS9zbGF5dmF1bHQvYWNz' =>[
-            'destination' => 'https://support-slayaid.herokuapp.com/slayvault/acs',
-            'logout' => 'https://support-slayaid.herokuapp.com/slayvault/sls',
+            'destination' => 'https://support.saaslay.test/slayvault/acs',
+            'logout' => 'https://support.saaslay.test/slayvault/sls',
             'certificate' => '',
         ],
 	/**
